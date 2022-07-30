@@ -3,8 +3,8 @@
 ## Overview
 
 This is a simple library I've put together for evaluating arithmetic
-expressions. The expressions are supplied by a user as a string of characters,
-and the integer result is placed in referenced variable.
+expressions. A user supplies the expressions as a string of characters, and the
+integer result is placed in the referenced variable.
 
 ## Usage
 
