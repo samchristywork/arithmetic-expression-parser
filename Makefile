@@ -18,3 +18,5 @@ example: src/example_usage.c src/eval.c src/eval.h
 
 clean:
 	rm -rf build/
+
+.PHONY: clean test example
