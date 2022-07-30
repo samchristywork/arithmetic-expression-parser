@@ -9,6 +9,7 @@ int main() {
     printf("Enter an expression: ");
     int ret = scanf("%s", buf);
     if (ret == -1) {
+      printf("\n");
       break;
     }
     int result = 0;
