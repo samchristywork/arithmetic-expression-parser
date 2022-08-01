@@ -99,7 +99,7 @@ struct token *tokenize(const char *string) {
     } else if (is_paren(string[i])) {
       next = add_node(next, PAREN, string[i]);
     } else {
-      printf("not_handled: '%c'\n", string[i]);
+      printf("Ignoring character: '%c'\n", string[i]);
     }
   }
 
@@ -170,10 +170,10 @@ void debug_print_token(struct token *n) {
 void debug_print_list(struct token *head) {
   printf("\n\nBegin Token List:\n");
   struct token *n = head;
-  print_token(n);
+  debug_print_token(n);
   while (n->rhs != 0) {
     n = n->rhs;
-    print_token(n);
+    debug_print_token(n);
   }
   printf("END Token List:\n\n");
 }
@@ -183,8 +183,7 @@ void debug_print_list(struct token *head) {
  */
 void free_all(struct token *head) {
   if (head->rhs != 0) {
-    // printf("%p\n", (void *)head.rhs);
-    freeall(head->rhs);
+    free_all(head->rhs);
     free(head->rhs);
   }
 }
@@ -263,7 +262,7 @@ int eval_subexpression(struct token *head, struct token *tail) {
   while (n->rhs != tail) {
     n = n->rhs;
     if (n->type == PAREN && n->value == ')') {
-      struct token *p = findPrevious(n, PAREN, '(');
+      struct token *p = find_previous(n, PAREN, '(');
       if (p->type == ERROR) {
         return EXIT_FAILURE;
       }
@@ -304,7 +303,7 @@ int eval_subexpression(struct token *head, struct token *tail) {
     if (n->type == OPERATOR && n->value == '/') {
       if (n->rhs->value == 0) {
         fprintf(stderr, "Error while evaluating: \"");
-        print_expression(stderr, head, tail);
+        debug_print_expression(stderr, head, tail);
         fprintf(stderr, "\" - Cannot divide by zero\n");
         return EXIT_FAILURE;
       }
@@ -355,14 +354,14 @@ int eval(const char *string, int *result) {
     ret = EXIT_FAILURE;
   }
 
-  // print_list(head);
+  // debug_print_list(head);
 
   if (ret == EXIT_SUCCESS) {
     (*result) = head->rhs->value;
   } else {
     (*result) = 0;
   }
-  freeall(head);
+  free_all(head);
   free(head);
   return ret;
 }
