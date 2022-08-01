@@ -5,6 +5,10 @@
 #include <string.h>
 #include <time.h>
 
+/*
+ * These are the tokens that can be matched to the various lexemes read by the
+ * program.
+ */
 typedef enum TOKEN {
   UNKNOWN = 0,
   DIGIT,
@@ -17,6 +21,10 @@ typedef enum TOKEN {
   ERROR,
 } token_t;
 
+/*
+ * This is a simple binary tree. Every node in the tree has a type and value
+ * corresponding to the semantic meaning for that token.
+ */
 struct token {
   char type;
   int value;
@@ -38,10 +46,19 @@ struct token *add_node(struct token *n, char type, int value) {
   return (*n).rhs;
 }
 
-long isoperator(char c) { return (long)strchr("+-*/^", c); }
+/*
+ * Helper function for the lexer portion of this program.
+ */
+long is_operator(char c) { return (long)strchr("+-*/^", c); }
 
-long isparen(char c) { return (long)strchr("()", c); }
+/*
+ * Helper function for the lexer portion of this program.
+ */
+long is_paren(char c) { return (long)strchr("()", c); }
 
+/*
+ * Deletes (frees) an entire linked list.
+ */
 void delete_list(struct token *head) {
   struct token *n = head->rhs;
   while (1) {
@@ -57,6 +74,10 @@ void delete_list(struct token *head) {
   }
 }
 
+/*
+ * Turns a string into a list of tokens. Basically the lexer portion of this
+ * program.
+ */
 struct token *tokenize(const char *string) {
   struct token head = {0};
   struct token *next;
@@ -93,9 +114,11 @@ struct token *tokenize(const char *string) {
     value *= 10;
     value += n->value;
     if (n->type != n->rhs->type ||
-        n->type == PAREN) { // TODO HACKY! But it fixes the double-parenthesis
-                            // problem where if you have two parenthesis in a
-                            // row the test won't pass
+        n->type == PAREN) { /*
+                             * TODO HACKY! But it fixes the double-parenthesis
+                             * problem where if you have two parenthesis in a
+                             * row the test won't pass.
+                             */
       if (n->type == BLANK) {
         // printf("BLANK\n");
       }
@@ -124,7 +147,10 @@ struct token *tokenize(const char *string) {
   return token_list_head;
 }
 
-void print_token(struct token *n) {
+/*
+ * Debug function for printing information about a token.
+ */
+void debug_print_token(struct token *n) {
   printf("PA %p ", (void *)n->lhs);
   printf("SE %p ", (void *)n);
   printf("CH %p ", (void *)n->rhs);
@@ -144,7 +170,10 @@ void print_token(struct token *n) {
   printf("\n");
 }
 
-void print_list(struct token *head) {
+/*
+ * debug function for printing a list of tokens.
+ */
+void debug_print_list(struct token *head) {
   printf("\n\nBegin Token List:\n");
   struct token *n = head;
   print_token(n);
@@ -155,7 +184,10 @@ void print_list(struct token *head) {
   printf("END Token List:\n\n");
 }
 
-void freeall(struct token *head) {
+/*
+ * Recursively frees an entire list.
+ */
+void free_all(struct token *head) {
   if (head->rhs != 0) {
     // printf("%p\n", (void *)head.rhs);
     freeall(head->rhs);
@@ -165,6 +197,9 @@ void freeall(struct token *head) {
   // free(head.rhs);
 }
 
+/*
+ * Removes (splices) a node from the linked list.
+ */
 void remove_node(struct token *n) {
   n->lhs->rhs = n->rhs;
   n->rhs->lhs = n->lhs;
@@ -174,7 +209,10 @@ void remove_node(struct token *n) {
   free(n);
 }
 
-struct token *findNext(struct token *head, token_t type, int value) {
+/*
+ * Finds a token of a particular type and value in the linked list.
+ */
+struct token *find_next(struct token *head, token_t type, int value) {
   struct token *n = head;
   while (1) {
     n = n->rhs;
@@ -184,7 +222,10 @@ struct token *findNext(struct token *head, token_t type, int value) {
   }
 }
 
-struct token *findPrevious(struct token *head, token_t type, int value) {
+/*
+ * Reverse counterpart of find_next.
+ */
+struct token *find_previous(struct token *head, token_t type, int value) {
   struct token *n = head;
   while (1) {
     n = n->lhs;
@@ -198,7 +239,10 @@ struct token *findPrevious(struct token *head, token_t type, int value) {
   }
 }
 
-void print_expression(FILE *fileno, struct token *head, struct token *tail) {
+/*
+ * Debug function for printing out a list of tokens as single character values.
+ */
+void debug_print_expression(FILE *fileno, struct token *head, struct token *tail) {
   struct token *n;
   n = head;
   // printf("-Evaluating: ");
@@ -216,6 +260,10 @@ void print_expression(FILE *fileno, struct token *head, struct token *tail) {
   }
 }
 
+/*
+ * Recursively evaluates a subset of an array of tokens. This is where most of
+ * the actual parsing is done.
+ */
 int eval_subexpression(struct token *head, struct token *tail) {
   struct token *n;
 
@@ -301,6 +349,10 @@ int eval_subexpression(struct token *head, struct token *tail) {
   return EXIT_SUCCESS;
 }
 
+/*
+ * The main function that users will use. Pass a string in and get a result
+ * assigned to the "result" variable.
+ */
 int eval(const char *string, int *result) {
   // printf("\n\n\n\n\n");
   // printf("Evaluating: %s\n", string);
