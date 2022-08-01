@@ -350,7 +350,7 @@ int eval(const char *string, int *result) {
   }
   int ret = eval_subexpression(head, n->rhs);
 
-  if (head->rhs->type != NUMBER) {
+  if (ret == EXIT_SUCCESS && head->rhs->type != NUMBER) {
     ret = EXIT_FAILURE;
   }
 
