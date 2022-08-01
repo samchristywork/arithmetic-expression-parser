@@ -32,10 +32,18 @@ struct token {
   struct token *lhs;
 };
 
+/*
+ * These globals help track memory allocation. At the end of program execution,
+ * the number of mallocs should match the number of frees. Not currently used,
+ * but I keep them around for debugging.
+ */
 int nmallocs = 0;
 int nfrees = 0;
 int nthese = 0;
 
+/*
+ * Adds a node to the right of the node that is passed to it.
+ */
 struct token *add_node(struct token *n, char type, int value) {
   nmallocs++;
   (*n).rhs = (struct token *)malloc(sizeof(struct token *));
