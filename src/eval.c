@@ -39,7 +39,6 @@ struct token {
  */
 int nmallocs = 0;
 int nfrees = 0;
-int nthese = 0;
 
 /*
  * Adds a node to the right of the node that is passed to it.
@@ -92,25 +91,18 @@ struct token *tokenize(const char *string) {
   next = add_node(&head, 0, 0);
   for (unsigned int i = 0; i < strlen(string) + 1; i++) {
     if (isdigit(string[i])) {
-      // printf("d");
       next = add_node(next, DIGIT, string[i] - '0');
     } else if (isblank(string[i])) {
-      // printf("b");
       next = add_node(next, BLANK, string[i]);
-    } else if (isoperator(string[i])) {
-      // printf("o");
+    } else if (is_operator(string[i])) {
       next = add_node(next, OPERATOR, string[i]);
-    } else if (isparen(string[i])) {
-      // printf("p");
+    } else if (is_paren(string[i])) {
       next = add_node(next, PAREN, string[i]);
     } else {
       printf("not_handled: '%c'\n", string[i]);
     }
   }
-  // printf("\n");
 
-  // Print string of token tokens
-  // printf("Token tokens:\n");
   struct token *n = &head;
   int value = 0;
   struct token *token_list_head =
@@ -128,18 +120,14 @@ struct token *tokenize(const char *string) {
                              * row the test won't pass.
                              */
       if (n->type == BLANK) {
-        // printf("BLANK\n");
       }
       if (n->type == OPERATOR) {
-        // printf("OPERATOR %c\n", n.value);
         token_list_node = add_node(token_list_node, OPERATOR, n->value);
       }
       if (n->type == PAREN) {
-        // printf("PAREN %c\n", n.value);
         token_list_node = add_node(token_list_node, PAREN, n->value);
       }
       if (n->type == DIGIT) {
-        // printf("NUMBER %d\n", value);
         token_list_node = add_node(token_list_node, NUMBER, value);
       }
       value = 0;
@@ -147,8 +135,6 @@ struct token *tokenize(const char *string) {
     n = n->rhs;
   }
   token_list_node = add_node(token_list_node, 0, 0);
-  // printf("%c", n.type);
-  // printf("\n\n");
 
   delete_list(&head);
 
@@ -201,8 +187,6 @@ void free_all(struct token *head) {
     freeall(head->rhs);
     free(head->rhs);
   }
-  // free(head.rhs->rhs);
-  // free(head.rhs);
 }
 
 /*
@@ -253,7 +237,6 @@ struct token *find_previous(struct token *head, token_t type, int value) {
 void debug_print_expression(FILE *fileno, struct token *head, struct token *tail) {
   struct token *n;
   n = head;
-  // printf("-Evaluating: ");
   while (n->rhs != tail) {
     n = n->rhs;
     if (n->type == NUMBER) {
@@ -274,8 +257,6 @@ void debug_print_expression(FILE *fileno, struct token *head, struct token *tail
  */
 int eval_subexpression(struct token *head, struct token *tail) {
   struct token *n;
-
-  // print_expression(head, tail);
 
   // Parenthesis
   n = head;
@@ -362,8 +343,6 @@ int eval_subexpression(struct token *head, struct token *tail) {
  * assigned to the "result" variable.
  */
 int eval(const char *string, int *result) {
-  // printf("\n\n\n\n\n");
-  // printf("Evaluating: %s\n", string);
   struct token *head = tokenize(string);
 
   struct token *n = head;
