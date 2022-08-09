@@ -12,7 +12,11 @@ int main() {
      */
     printf("Enter an expression: ");
     int ret = scanf("%s", buf);
-    if (ret == -1) {
+
+    /*
+     * If EOF is encountered, then exit the program.
+     */
+    if (ret < 0) {
       printf("\n");
       break;
     }
