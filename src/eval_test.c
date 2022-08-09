@@ -3,10 +3,22 @@
 
 #include "eval.h"
 
+/*
+ * Macro to run the "test" function with both the string representing the
+ * expression, and the value of the expression as evaluated by the compiler.
+ */
 #define TEST(n) test(#n, n)
 
+/*
+ * Keep track of the number of tests and how many were passed.
+ */
 int ntests = 0;
 int npassed = 0;
+
+/*
+ * A function that will run the "eval" function and report to the user whether
+ * the result was different from the expected result.
+ */
 void test(char *string, int should_equal) {
   int result;
   int ret = eval(string, &result);
@@ -17,6 +29,9 @@ void test(char *string, int should_equal) {
 }
 
 int main() {
+  /*
+   * Some simple expressions.
+   */
   TEST(1 + 1);
   TEST(1 + 1);
   TEST(1 - 1);
@@ -36,9 +51,16 @@ int main() {
        584 / 403 * (651) + 754 + 399 + 932 + 60 * (676 / 368 * 739 - 12) - 226 -
        586 / 94 + 539 / 795 - 570 * 434 / 378);
 
+  /*
+   * Expressions using the "^" syntax, which cannot be represented by the
+   * macros.
+   */
   test("(1+1+1)^2", 9);
   test("2^3", 8);
 
+  /*
+   * More complex tests.
+   */
   TEST((1 + (1)));
   TEST((1 + (1) + 1) + 1);
 
@@ -78,6 +100,9 @@ int main() {
        (78 - 157));
   // TEST((((6)*24-24*(23*17))*(23)+14/27*(2-11)+27*29/5-26/(8*19)-(15+5)/(2/11)-((5)+19-29)+11/26+2/11*10*25*23+2-(1+9/27*16))*((((18*12))-((0)+16-14)-(((3)*13-6))))/((((9/10*14-28)/25/11*(22)/29-17*3-28+(20*29)/22*23+1*18*(17)+4-11/26+23+28+15))));
 
+  /*
+   * Invalid tests.
+   */
   test("1/0", 0);
   test("(", 0);
   test(")", 0);
@@ -87,5 +112,8 @@ int main() {
   test("-", 0);
   test("*/+-", 0);
 
+  /*
+   * Report to the user how many tests passed.
+   */
   printf("DONE %d tests passed out of %d\n", npassed, ntests);
 }
