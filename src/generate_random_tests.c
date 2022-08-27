@@ -3,6 +3,10 @@
 #include <string.h>
 #include <time.h>
 
+/*
+ * Change the structure of a string full of arithmetic operators in a way that
+ * preserves correctness. The character 'a' is a stand-in for a number.
+ */
 char *mutate(char *string) {
   char *ret = malloc(1000);
   bzero(ret, 1000);
@@ -45,6 +49,10 @@ char *mutate(char *string) {
   return ret;
 }
 
+/*
+ * Generate an arithmetic string using successive calls to `mutate()`. Replaces
+ * instances of the character 'a' with integers.
+ */
 void genString(int permutations, int range) {
   char *string;
   string = mutate("a");
@@ -66,6 +74,10 @@ void genString(int permutations, int range) {
 
 int main() {
   srand(time(0));
+
+  /*
+   * Generate 10 random strings.
+   */
   for (int i = 0; i < 10; i++) {
     genString(random() % 9, random() % 1000);
   }
