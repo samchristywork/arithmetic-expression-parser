@@ -1,7 +1,7 @@
 CC := gcc
 LIBS := -lm
 
-all: build/eval_test
+all: build/eval_test build/eval.o
 
 build/eval_test: ./src/eval.c ./src/eval.h ./src/eval_test.c
 	mkdir -p build/
