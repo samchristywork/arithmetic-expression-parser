@@ -36,6 +36,29 @@ See the Makefile for more details.
 The `eval_debug()` function is included in this library which works just like
 `eval()` but prints internal status messages to `stdout`.
 
+Here is an example of what one of these messages might look like:
+
+```
+Evaluating: "1+(2 * 3)"
+Found digit: 1
+Found operator: +
+Found paren: (
+Found digit: 2
+Found operator: *
+Found digit: 3
+Found paren: )
+
+
+Begin Token List:
+PA (nil) SE 0x5560eade2810 CH 0x5560eade2850 HEAD 0
+PA 0x5560eade2810 SE 0x5560eade2850 CH 0x5560eade2910 NUMBER 7
+PA 0x5560eade2850 SE 0x5560eade2910 CH (nil) TAIL 0
+END Token List:
+
+Function exited successfully.
+Answer: 7
+```
+
 ## Dependencies:
 
 The library has no external dependencies. All you need is the C compiler that
