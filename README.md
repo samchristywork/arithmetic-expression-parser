@@ -11,9 +11,16 @@ integer result is placed in the referenced variable.
 Here is some example usage of this library.
 
 ```c
-int result = 0;
-eval("1+2", &result);
-printf("Answer: %d\n", result);
+#include <stdio.h>
+#include <stdlib.h>
+
+#include "eval.h"
+
+int main() {
+  int result = 0;
+  eval("1+2", &result);
+  printf("Answer: %d\n", result);
+}
 ```
 
 ## Dependencies:
