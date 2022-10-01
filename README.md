@@ -31,6 +31,11 @@ gcc example.c build/eval.o -I src/ -lm
 
 See the Makefile for more details.
 
+## Debug
+
+The `eval_debug()` function is included in this library which works just like
+`eval()` but prints internal status messages to `stdout`.
+
 ## Dependencies:
 
 The library has no external dependencies. All you need is the C compiler that
