@@ -23,6 +23,14 @@ int main() {
 }
 ```
 
+One way to build this code would be the following command:
+
+```
+gcc example.c build/eval.o -I src/ -lm
+```
+
+See the Makefile for more details.
+
 ## Dependencies:
 
 The library has no external dependencies. All you need is the C compiler that
