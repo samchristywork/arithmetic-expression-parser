@@ -59,6 +59,11 @@ Function exited successfully.
 Answer: 7
 ```
 
+## Limitations
+
+This library can't presently handle floating point numbers, and will return
+`EXIT_FAILURE` if one is encountered.
+
 ## Dependencies:
 
 The library has no external dependencies. All you need is the C compiler that
