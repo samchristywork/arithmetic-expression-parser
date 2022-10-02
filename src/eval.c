@@ -5,6 +5,8 @@
 #include <string.h>
 #include <time.h>
 
+int verbose = 0;
+
 /*
  * These are the tokens that can be matched to the various lexemes read by the
  * program.
@@ -91,12 +93,21 @@ struct token *tokenize(const char *string) {
   next = add_node(&head, 0, 0);
   for (unsigned int i = 0; i < strlen(string) + 1; i++) {
     if (isdigit(string[i])) {
+      if (verbose) {
+        printf("Found digit: %c\n", string[i]);
+      }
       next = add_node(next, DIGIT, string[i] - '0');
     } else if (isblank(string[i])) {
       next = add_node(next, BLANK, string[i]);
     } else if (is_operator(string[i])) {
+      if (verbose) {
+        printf("Found operator: %c\n", string[i]);
+      }
       next = add_node(next, OPERATOR, string[i]);
     } else if (is_paren(string[i])) {
+      if (verbose) {
+        printf("Found paren: %c\n", string[i]);
+      }
       next = add_node(next, PAREN, string[i]);
     } else {
       printf("Ignoring character: '%c'\n", string[i]);
@@ -354,7 +365,9 @@ int eval(const char *string, int *result) {
     ret = EXIT_FAILURE;
   }
 
-  // debug_print_list(head);
+  if (verbose) {
+    debug_print_list(head);
+  }
 
   if (ret == EXIT_SUCCESS) {
     (*result) = head->rhs->value;
