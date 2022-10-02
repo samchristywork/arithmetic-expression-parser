@@ -93,6 +93,10 @@ struct token *tokenize(const char *string) {
   struct token *next;
   next = add_node(&head, 0, 0);
   for (unsigned int i = 0; i < strlen(string) + 1; i++) {
+    if (string[i] == 0) {
+      next = add_node(next, OPERATOR, string[i]);
+      continue;
+    }
     if (isdigit(string[i])) {
       if (verbose) {
         printf("Found digit: %c\n", string[i]);
