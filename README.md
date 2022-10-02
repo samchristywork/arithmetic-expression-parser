@@ -64,6 +64,14 @@ Answer: 7
 This library can't presently handle floating point numbers, and will return
 `EXIT_FAILURE` if one is encountered.
 
+## Return Value
+
+`eval` returns `EXIT_SUCCESS` if the string was successfully evaluated, and
+`EXIT_FAILURE` otherwise. Please note that even in the case of failure, the
+function will still make a best-effort attempt to evaluate the string which can
+result in unexpected outcomes. For instance, if it is supplied the string
+"2.2+1", it will drop the '.' and evaluate the string as "22+1".
+
 ## Dependencies:
 
 The library has no external dependencies. All you need is the C compiler that
