@@ -5,6 +5,7 @@
 #include <string.h>
 #include <time.h>
 
+int failed = 0;
 int verbose = 0;
 
 /*
@@ -111,6 +112,7 @@ struct token *tokenize(const char *string) {
       next = add_node(next, PAREN, string[i]);
     } else {
       printf("Ignoring character: '%c'\n", string[i]);
+      failed = 1;
     }
   }
 
@@ -171,6 +173,7 @@ void debug_print_token(struct token *n) {
     printf("NUMBER %d", n->value);
   } else {
     printf("UNKNOWN %d", n->value);
+    failed = 1;
   }
   printf("\n");
 }
@@ -275,10 +278,12 @@ int eval_subexpression(struct token *head, struct token *tail) {
     if (n->type == PAREN && n->value == ')') {
       struct token *p = find_previous(n, PAREN, '(');
       if (p->type == ERROR) {
+        failed = 1;
         return EXIT_FAILURE;
       }
       int ret = eval_subexpression(p, n);
       if (ret == EXIT_FAILURE) {
+        failed = 1;
         return EXIT_FAILURE;
       }
       remove_node(p);
@@ -316,6 +321,7 @@ int eval_subexpression(struct token *head, struct token *tail) {
         fprintf(stderr, "Error while evaluating: \"");
         debug_print_expression(stderr, head, tail);
         fprintf(stderr, "\" - Cannot divide by zero\n");
+        failed = 1;
         return EXIT_FAILURE;
       }
       int value = n->lhs->value / n->rhs->value;
@@ -376,5 +382,10 @@ int eval(const char *string, int *result) {
   }
   free_all(head);
   free(head);
+
+  if (failed) {
+    ret = EXIT_FAILURE;
+  }
+
   return ret;
 }
