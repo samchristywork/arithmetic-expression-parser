@@ -391,5 +391,14 @@ int eval(const char *string, int *result) {
     ret = EXIT_FAILURE;
   }
 
+  if (verbose) {
+    if (ret == EXIT_FAILURE) {
+      printf("Function exited unsuccessfully.\n");
+    }
+    if (ret == EXIT_SUCCESS) {
+      printf("Function exited successfully.\n");
+    }
+  }
+
   return ret;
 }
