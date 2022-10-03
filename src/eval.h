@@ -26,4 +26,11 @@
  */
 int eval(const char *string, int *result);
 
+/*
+ * This is the same as eval, but prints internal status messages to stdout.
+ *
+ * Here is an example:
+ */
+int eval_debug(const char *string, int *result);
+
 #endif

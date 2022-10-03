@@ -402,3 +402,12 @@ int eval(const char *string, int *result) {
 
   return ret;
 }
+
+/*
+ * Identical to eval, but also prints internal status messages to stdout.
+ */
+int eval_debug(const char *string, int *result) {
+  printf("Evaluating: \"%s\"\n", string);
+  verbose = 1;
+  return eval(string, result);
+}
