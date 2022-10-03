@@ -23,4 +23,4 @@ build/example: src/example_usage.c build/eval.o
 clean:
 	rm -rf build/
 
-.PHONY: clean test example
+.PHONY: all clean test example
