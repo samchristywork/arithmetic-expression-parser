@@ -283,12 +283,12 @@ int eval_subexpression(struct token *head, struct token *tail) {
       struct token *p = find_previous(n, PAREN, '(');
       if (p->type == ERROR) {
         failed = 1;
-        return EXIT_FAILURE;
+        return FAILURE;
       }
       int ret = eval_subexpression(p, n);
-      if (ret == EXIT_FAILURE) {
+      if (ret == FAILURE) {
         failed = 1;
-        return EXIT_FAILURE;
+        return FAILURE;
       }
       remove_node(p);
       n = n->lhs;
@@ -326,7 +326,7 @@ int eval_subexpression(struct token *head, struct token *tail) {
         debug_print_expression(stderr, head, tail);
         fprintf(stderr, "\" - Cannot divide by zero\n");
         failed = 1;
-        return EXIT_FAILURE;
+        return FAILURE;
       }
       int value = n->lhs->value / n->rhs->value;
       remove_node(n->lhs);
@@ -355,7 +355,7 @@ int eval_subexpression(struct token *head, struct token *tail) {
       n->value = value;
     }
   }
-  return EXIT_SUCCESS;
+  return SUCCESS;
 }
 
 /*
@@ -371,15 +371,15 @@ int eval(const char *string, int *result) {
   }
   int ret = eval_subexpression(head, n->rhs);
 
-  if (ret == EXIT_SUCCESS && head->rhs->type != NUMBER) {
-    ret = EXIT_FAILURE;
+  if (ret == SUCCESS && head->rhs->type != NUMBER) {
+    ret = FAILURE;
   }
 
   if (verbose) {
     debug_print_list(head);
   }
 
-  if (ret == EXIT_SUCCESS) {
+  if (ret == SUCCESS) {
     (*result) = head->rhs->value;
   } else {
     (*result) = 0;
@@ -388,14 +388,14 @@ int eval(const char *string, int *result) {
   free(head);
 
   if (failed) {
-    ret = EXIT_FAILURE;
+    ret = FAILURE;
   }
 
   if (verbose) {
-    if (ret == EXIT_FAILURE) {
+    if (ret == FAILURE) {
       printf("Function exited unsuccessfully.\n");
     }
-    if (ret == EXIT_SUCCESS) {
+    if (ret == SUCCESS) {
       printf("Function exited successfully.\n");
     }
   }

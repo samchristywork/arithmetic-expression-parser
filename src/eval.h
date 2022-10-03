@@ -2,6 +2,14 @@
 #define EVAL_H
 
 /*
+ * These are the different exit statuses of the `eval` function.
+ */
+typedef enum EXIT_STATUS {
+  SUCCESS = 0,
+  FAILURE = -1
+} exit_t;
+
+/*
  * Evaluate a string
  *
  * Parameters:
