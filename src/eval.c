@@ -5,6 +5,8 @@
 #include <string.h>
 #include <time.h>
 
+#include "eval.h"
+
 int failed = 0;
 int verbose = 0;
 
