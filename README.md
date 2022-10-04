@@ -18,8 +18,12 @@ Here is some example usage of this library.
 
 int main() {
   int result = 0;
-  eval("1+2", &result);
-  printf("Answer: %d\n", result);
+  int return_value = eval("1+2", &result);
+  if (return_value == 0) {
+    printf("Answer: %d\n", result);
+  } else {
+    printf("Expression could not be evaluated.\n");
+  }
 }
 ```
 
