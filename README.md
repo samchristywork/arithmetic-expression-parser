@@ -8,7 +8,7 @@ integer result is placed in the referenced variable.
 
 ## Usage
 
-Here is some example usage of this library.
+Here is an example that shows how to use this library.
 
 ```c
 #include <stdio.h>
