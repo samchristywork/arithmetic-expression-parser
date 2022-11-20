@@ -6,6 +6,20 @@ This is a simple library I've put together for evaluating arithmetic
 expressions. A user supplies the expressions as a string of characters, and the
 integer result is placed in the referenced variable.
 
+## Features
+
+- Parser for arbitrary arithmetic expressions including signed and unsigned integers, operators, and nested parentheses
+- Parser respects order of operations
+- Comprehensive testing
+- Randomly generated (deterministic) tests
+- Error checking for malformed expressions and divide by zero
+- Library usage example
+- Support for arbitrary length expressions
+- Designed to be used as a library
+- Simple, heavily annotated header file
+- No dependencies
+- Debugging output to print out token lists
+
 ## Usage
 
 Here is an example that shows how to use this library.
