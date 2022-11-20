@@ -73,7 +73,10 @@ void genString(int permutations, int range) {
 }
 
 int main() {
-  srand(time(0));
+  /*
+   * Optionally, generate new tests every time
+   */
+  // srand(time(0));
 
   /*
    * Generate 10 random strings.

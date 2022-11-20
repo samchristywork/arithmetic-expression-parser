@@ -41,4 +41,6 @@ int eval(const char *string, int *result);
  */
 int eval_debug(const char *string, int *result);
 
+void print_version();
+
 #endif

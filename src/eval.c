@@ -6,6 +6,7 @@
 #include <time.h>
 
 #include "eval.h"
+#include "version.h"
 
 int failed = 0;
 int verbose = 0;
@@ -412,4 +413,8 @@ int eval_debug(const char *string, int *result) {
   printf("Evaluating: \"%s\"\n", string);
   verbose = 1;
   return eval(string, result);
+}
+
+void print_version() {
+  printf("Version: %s\n", VERSION_STRING);
 }
