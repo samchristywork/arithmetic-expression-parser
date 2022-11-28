@@ -416,5 +416,6 @@ int eval_debug(const char *string, int *result) {
 }
 
 void print_version() {
-  printf("Version: %s\n", VERSION_STRING);
+  printf("%s\n\n", VERSION_STRING);
+  printf("%s\n", LICENSE_STRING);
 }
