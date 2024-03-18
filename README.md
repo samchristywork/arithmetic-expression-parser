@@ -1,4 +1,4 @@
-![Banner](https://s-christy.com/status-banner-service/arithmetic-expression-parser/banner-slim.svg)
+![Banner](https://s-christy.com/sbs/status-banner.svg?icon=arithmetic.svg&hue=0&title=Arithmetic%20Expression%20Parser&description=PEMDAS)
 
 ## Overview
 
